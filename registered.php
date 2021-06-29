@@ -3,6 +3,7 @@
  include_once "connection.php";
 
  $error="";
+ $email_check="";
   /* []--eitar bhitor register button er jei naam seita likhte hobe */
  if(isset($_POST['register']))
  {
@@ -14,9 +15,38 @@
 	 
 	 /* thikmoto register hocche
 	 echo "<script> alert('yes')</script>"; */
+	 /*password validation*/
+	 if($password!=$connpass)
+	 {
+		 $error="Password not match";
+	 }
+	 /* else
+	 {
+		 $password=md5($password);
+	 } */
+       /*mail verification start*/
+	 $email_exist="SELECT email FROM register_table WHERE email='$email'";
 
-
-
+	 $query= mysqli_query($conn,$email_exist);
+	 if(mysqli_num_rows($query)>0)
+	 {
+         $email_check=" THIS EMAIL IS ALREADY REGISTERED ";
+	 }
+	  /*mail verification end*/
+	  else
+	  {
+		
+		$password=md5($password);
+	   $sql="INSERT INTO register_table(fname,lname,email,password) VALUES('$fname','$lname','$email','$password')";
+  
+	   $query=mysqli_query($conn,$sql);
+	   if($query)
+	   {
+		   echo "<script> alert('You are registered')</script>";
+		   
+	   }
+	  }
+	  
  }
 
 ?>
@@ -230,17 +260,25 @@
 					</div>
 				</div>
 				<h6>Login information</h6>
-					<form action="?" method="post">
-					<input type="text" placeholder="First Name..." name="fname" required=" " >
-					<input type="text" placeholder="Last Name..." name="lname" required=" " >
-					<input type="email" placeholder="Email Address" name="email" required=" " >
-					<input type="password" placeholder="Password" name="password" required=" " >
-					<input type="password" placeholder="Password Confirmation" name="connpass" required=" " >
+				<div>
+					<form action=" " method="post">
+					<input type="text" placeholder="First Name..." name="fname"  required=" ">
+					
+					<input type="text" placeholder="Last Name..." name="lname" required=" ">
+					
+					<input type="email" placeholder="Email Address" name="email" required=" ">
+					<div align="center"><span class="text-danger"><?=$email_check;?></span></div>
+					<input type="password" placeholder="Password" name="password" required=" ">
+					
+					<input type="password" placeholder="Password Confirmation" name="connpass" required=" ">
+					<div align="center"><span class="text-danger"><?=$error;?></span></div>
 					<div class="register-check-box">
 						<div class="check">
-							<label class="checkbox"><input type="checkbox" name="checkbox"><i> </i>I accept the terms and conditions</label>
+							<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>I accept the terms and conditions</label>
 						</div>
 					</div>
+			
+				</div>
 					<input type="submit" name="register" value="Register">
 				</form>
 			</div>

@@ -45,7 +45,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="agile-login">
 				<ul>
 					<li><a href="registered.php"> Create Account </a></li>
-					<li><a href="login.html">Login</a></li>
+					<li><a href="login.php">Login</a></li>
 					<li><a href="contact.html">Help</a></li>
 					
 				</ul>
